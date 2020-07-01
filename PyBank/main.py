@@ -11,7 +11,7 @@ with open(PyBank_csv,'r') as csvfile:
     csvreader = csv.reader(csvfile, delimiter=",")
     
     #Reading Header
-    PyBank_header = next(csvfile) #reading header from file
+    PyBank_header = next(csvreader) #reading header from file
     
     #checking Header is correct by printing.  To be removed or commented out in final version
     #print(PyBank_header)
@@ -27,7 +27,6 @@ print("******************************")
 print(f"\nMonthly_data total list number: {len(Monthly_data)}")
 
 Total_PL = 0 #tracking total profit loss
-#Total_PL = sum(int(Monthly_data[1]))
 
 for row in Monthly_data:
     Total_PL += int(row[1]) #addition is equivalent to c=c+a.  Assumes profit/loss is integer
@@ -39,6 +38,13 @@ print(f"\nTotal profit/Loss is: ${Total_PL}")
 #using List comprehension to execute code
 #Monthly_diff is the month to month difference if profit/loss calculated by list comprehension
 Monthly_diff = [int(Monthly_data[i+1][1])-int(Monthly_data[i][1]) for i in range(0,len(Monthly_data)-1)]
+
+#using for loop to accomplish same thing as list comprehension statement.  To make sure understand
+#Monthly_change=[]
+#for i in range(0,len(Monthly_data)-1):
+#    Monthly_change.append(int(Monthly_data[i+1][1])-int(Monthly_data[i][1]))
+#Monthly_change.insert(0,0)
+#print(f"Monthly change in for loop {len(Monthly_change)}")
 
 #Calculating average monthly change
 Total_change = 0 #to sum total change for calculating average
@@ -74,10 +80,20 @@ print(f"Greatest decrease in profit  {Month_min[0]} with ${Month_min[1]}")
 print("")
 
 
-#using for loop to accomplish same thing as list comprehension statement.  To make sure understand
-#Monthly_change=[]
-#for i in range(0,len(Monthly_data)-1):
-#    Monthly_change.append(int(Monthly_data[i+1][1])-int(Monthly_data[i][1]))
-#Monthly_change.insert(0,0)
-#print(f"Monthly change in for loop {len(Monthly_change)}")
+
+
+#outputting results.  The \n character does a break line to move to next line in file
+PyBank_Out = os.path.join( "Resources", "PyBank_Summary.txt")
+text_file = open(PyBank_Out, 'w') 
+text_file.write("\n")
+text_file.write("Financial Analysis")  
+text_file.write("\n******************************") 
+text_file.write(f"\nMonthly_data total list number: {len(Monthly_data)}") 
+text_file.write(f"\nTotal profit/Loss is: ${Total_PL}")
+text_file.write(f"\nAverage Change in Profit: ${Average_change}")
+text_file.write(f"\nGreatest increase in profit  {Month_max[0]} with ${Month_max[1]}")
+text_file.write(f"\nGreatest decrease in profit  {Month_min[0]} with ${Month_min[1]}")
+text_file.write("\n")
+text_file.write("\n")
+text_file.close()
 
