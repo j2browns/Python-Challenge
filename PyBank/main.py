@@ -21,17 +21,17 @@ with open(PyBank_csv,'r') as csvfile:
 
 #Analysis below assumes data is given in months, sorted in order
 
-print("Financial Analysis")
-print("******************************")
+#print("Financial Analysis")
+#print("******************************")
 #printing number of months
-print(f"\nMonthly_data total list number: {len(Monthly_data)}")
+#print(f"\nMonthly_data total list number: {len(Monthly_data)}")
 
 Total_PL = 0 #tracking total profit loss
 
 for row in Monthly_data:
     Total_PL += int(row[1]) #addition is equivalent to c=c+a.  Assumes profit/loss is integer
 
-print(f"\nTotal profit/Loss is: ${Total_PL}")
+#print(f"\nTotal profit/Loss is: ${Total_PL}")
 
 #*************************************************************************************
 # Next section calculates difference in profit/loss between months.  Testing both List comprehension and for loop  
@@ -53,9 +53,8 @@ for row in Monthly_diff:
 
 Average_change = float(Total_change/(len(Monthly_diff)))
 Average_change = round(Average_change,2)
-print(f"\nAverage Change in Profit: ${Average_change}")
+#print(f"\nAverage Change in Profit: ${Average_change}")
 
-#Average_change = mean(Monthly_diff)
 Max_diff = max(Monthly_diff)
 Min_diff = min(Monthly_diff)
 
@@ -65,6 +64,7 @@ Monthly_diff.insert(0,0) #inserting extra row at beginning so Monthly_data and d
 Test1 = False
 Test2 = False
 
+#finding month of greatest increase and decrease.  When both found exit loop
 for i in range(0,len(Monthly_data)):
     if Monthly_diff[i] == Max_diff:
         Month_max = [Monthly_data[i][0],Monthly_diff[i]]
@@ -75,15 +75,19 @@ for i in range(0,len(Monthly_data)):
     if Test1 and Test2: #if found both max and min months then stop
         break
 
+print("******************************")
+print("Financial Analysis")
+print("******************************")
+#printing number of months
+print(f"\nMonthly_data total list number: {len(Monthly_data)}")
+print(f"\nTotal profit/Loss is: ${Total_PL}")
+print(f"\nAverage Change in Profit: ${Average_change}")
 print(f"Greatest increase in profit  {Month_max[0]} with ${Month_max[1]}")
 print(f"Greatest decrease in profit  {Month_min[0]} with ${Month_min[1]}")
 print("")
 
-
-
-
 #outputting results.  The \n character does a break line to move to next line in file
-PyBank_Out = os.path.join( "Resources", "PyBank_Summary.txt")
+PyBank_Out = os.path.join( "analysis", "PyBank_Summary.txt")
 text_file = open(PyBank_Out, 'w') 
 text_file.write("\n")
 text_file.write("Financial Analysis")  
